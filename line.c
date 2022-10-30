@@ -18,45 +18,6 @@ typedef struct point
     int y;
 } point;
 
-static inline void put_pixel(point coord, uint32_t color,struct fb_var_screeninfo *vinfo,struct fb_fix_screeninfo *finfo,uint8_t *fbp){
-    if (coord.x >=0 && coord.y >=0 && coord.x<vinfo->xres && coord.y<vinfo->yres){
-        long location = (coord.x+vinfo->xoffset) * (vinfo->bits_per_pixel/8) + (coord.y+vinfo->yoffset) * finfo->line_length;
-        *((uint32_t*)(fbp + location)) = color;
-    }
-    else {
-        printf("error writing out of the bond of the frame buffer");
-        exit(0);
-    }
-    
-}
-int diagonal_distance(point p1, point p2){
-    int d1 = abs(p1.x - p2.x);
-    int d2 = abs(p1.y - p2.y);
-    return (d1>=d2)?d1:d2;
-}
-
-static inline void draw_line(point pt1, point pt2,uint32_t color,struct fb_var_screeninfo *vinfo,struct fb_fix_screeninfo *finfo,uint8_t *fbp){
-    int nb = diagonal_distance(pt1,pt2);
-    float dx = (pt1.x - pt2.x)/(float)nb;
-    float dy = (pt1.y - pt2.y)/(float)nb;
-    float x = pt2.x;
-    float y = pt2.y;
-    point interpolated_point;
-    for (int i = 0;i<nb+1;i++){
-	interpolated_point.x = (int) x;
-	interpolated_point.y = (int) y;
-        put_pixel(interpolated_point,color,vinfo,finfo,fbp);
-        x += dx;
-        y += dy;
-    }
-}
-
-
-static inline uint32_t pixel_color(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo *vinfo)
-{
-	return (r<<vinfo->red.offset) | (g<<vinfo->green.offset) | (b<<vinfo->blue.offset);
-}
-
 
 int main(){
 
