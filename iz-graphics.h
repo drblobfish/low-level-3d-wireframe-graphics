@@ -5,11 +5,11 @@
 #include <linux/fb.h>
 
 
-typedef struct point
+typedef struct point2d
 {
     int x;
     int y;
-} point;
+} point2d;
 
 typedef struct screen
 {
@@ -25,7 +25,7 @@ void get_screen(screen *);
 
 void close_screen(screen *);
 
-void draw_line(point, point,uint32_t,screen *);
+void draw_line(point2d, point2d,uint32_t,screen *);
 
 uint32_t pixel_color(uint8_t, uint8_t, uint8_t, screen *);
 

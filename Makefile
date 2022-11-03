@@ -1,5 +1,5 @@
 main :
-	gcc -g main.c iz-graphics.c -o 3d_wireframe.out
+	gcc -g main.c iz-graphics.c line.c -o 3d_wireframe.out
 	sudo chgrp video ./3d_wireframe.out
 	sudo chmod g+s ./3d_wireframe.out
 

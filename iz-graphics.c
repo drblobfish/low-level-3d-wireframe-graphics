@@ -19,8 +19,8 @@
 /* 5 global variable declarations */
 /* 6 function prototypes */
 
-static inline void put_pixel(point, uint32_t,screen *);
-int diagonal_distance(point, point);
+static inline void put_pixel(point2d, uint32_t,screen *);
+int diagonal_distance(point2d, point2d);
 
 
 void get_screen( screen *screen){
@@ -46,7 +46,7 @@ void get_screen( screen *screen){
     screen->frame_buffer = mmap(0, screen->screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
 }
 
-static inline void put_pixel(point coord, uint32_t color,screen *screen){
+static inline void put_pixel(point2d coord, uint32_t color,screen *screen){
     if (coord.x >=0 && coord.y >=0 && coord.x < (screen->vinfo.xres) && coord.y < (screen->vinfo.yres)){
         long location = (coord.x+(screen->vinfo.xoffset)) * (screen->vinfo.bits_per_pixel/8) + (coord.y+(screen->vinfo.yoffset)) * (screen->finfo.line_length);
         *((uint32_t*)(screen->frame_buffer + location)) = color;
@@ -58,19 +58,19 @@ static inline void put_pixel(point coord, uint32_t color,screen *screen){
     
 }
 
-int diagonal_distance(point p1, point p2){
+int diagonal_distance(point2d p1, point2d p2){
     int d1 = abs(p1.x - p2.x);
     int d2 = abs(p1.y - p2.y);
     return (d1>=d2)?d1:d2;
 }
 
-void draw_line(point pt1, point pt2,uint32_t color,screen *screen){
+void draw_line(point2d pt1, point2d pt2,uint32_t color,screen *screen){
     int nb = diagonal_distance(pt1,pt2);
     float dx = (pt1.x - pt2.x)/(float)nb;
     float dy = (pt1.y - pt2.y)/(float)nb;
     float x = pt2.x;
     float y = pt2.y;
-    point interpolated_point;
+    point2d interpolated_point;
     for (int i = 0;i<nb+1;i++){
 	interpolated_point.x = (int) x;
 	interpolated_point.y = (int) y;
