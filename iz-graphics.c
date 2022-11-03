@@ -53,7 +53,7 @@ static inline void put_pixel(point2d coord, uint32_t color,screen *screen){
     }
     else {
         printf("error writing out of the bond of the frame buffer");
-        exit(0);
+        //exit(0);
     }
     
 }
