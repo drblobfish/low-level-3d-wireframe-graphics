@@ -14,13 +14,18 @@ polyhedron parse_polygon(){
 
     for (int i = 0; i < polygon.nb_node; i++)
     {
-        scanf("%f %f %f\n",&(polygon.nodes[i].x),&(polygon.nodes[i].y),&(polygon.nodes[i].y));
+        scanf("%f %f %f\n",&(polygon.nodes[i].x),&(polygon.nodes[i].y),&(polygon.nodes[i].z));
     }
     scanf("\n");
 
     for (int i = 0; i < polygon.nb_edge; i++)
     {
         int index1,index2;
+	if (index1>=polygon.nb_node || index2>=polygon.nb_node ||
+	    index1<0 || index2<0){
+	    printf("invalid polygon file");
+	    exit(0);
+	}
         scanf("%d %d",&index1,&index2);
         polygon.edges[i].point1 = &(polygon.nodes[index1]);
         polygon.edges[i].point2 = &(polygon.nodes[index2]);
