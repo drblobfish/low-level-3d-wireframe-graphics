@@ -62,14 +62,16 @@ int main(int argc, char *argv[]) {
 
     get_screen(&screen);
 
-	camera camera = {
-        {1.2,1.1,1.3},
-        {1,0,0},
-        {0,1,0},
-        {0,0,1},
-        8,
-        4
-    };
+	// camera camera = {
+    //     {1.2,1.1,1.3},
+    //     {1,0,0},
+    //     {0,1,0},
+    //     {0,0,1},
+    //     8,
+    //     4
+    // };
+
+    camera camera = parse_camera();
 
     //print_cube(camera,&screen);
 

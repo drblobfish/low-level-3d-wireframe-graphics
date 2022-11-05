@@ -5,5 +5,7 @@
 
 polyhedron parse_polygon();
 
+camera parse_camera();
+
 
 #endif	/* _PARSE_POLYGON */
