@@ -36,6 +36,8 @@ typedef struct polyhedron
     
 }polyhedron;
 
+void free_polyhedron(polyhedron*);
+
 void draw_polyhedron(polyhedron*,camera,screen *);
 
 point2d project_point(point3d,camera,screen *);

@@ -8,6 +8,7 @@
 #include "iz-graphics.h"
 #include "line.h"
 #include "3d_mesh.h"
+#include "parse_polygon.h"
 
 /* 2 defines */
 /* 3 external declarations */
@@ -70,7 +71,13 @@ int main(int argc, char *argv[]) {
         4
     };
 
-    print_cube(camera,&screen);
+    //print_cube(camera,&screen);
+
+    polyhedron my_polygon = parse_polygon();
+
+    draw_polyhedron(&my_polygon,camera,&screen);
+
+    free_polyhedron(&my_polygon);
 
 
     close_screen(&screen);

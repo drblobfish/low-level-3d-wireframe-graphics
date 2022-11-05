@@ -56,3 +56,8 @@ void draw_polyhedron(polyhedron *polyhedron_,camera camera,screen * screen){
     }
     
 }
+
+void free_polyhedron(polyhedron *polygon){
+    free(polygon->edges);
+    free(polygon->nodes);
+}
