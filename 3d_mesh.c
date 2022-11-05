@@ -45,7 +45,7 @@ point2d project_point(point3d _point3d, camera camera,screen *screen){
 }
 
 void draw_polyhedron(polyhedron *polyhedron_,camera camera,screen * screen){
-    uint32_t white = pixel_color(0xFF,0xFF,0xFF, &screen);
+    uint32_t white = pixel_color(0xFF,0xFF,0xFF, screen);
 
     for (int i = 0; i < polyhedron_->nb_edge; i++)
     {
