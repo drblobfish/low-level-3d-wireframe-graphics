@@ -21,7 +21,25 @@ typedef struct camera
     float fov_y;
 }camera;
 
-point2d project_point(point3d,camera,screen *screen);
+typedef struct edge
+{
+    point3d *point1;
+    point3d *point2;
+}edge;
+
+typedef struct polyhedron
+{
+    int nb_node;
+    int nb_edge;
+    point3d *nodes;
+    edge *edges;
+    
+}polyhedron;
+
+void draw_polyhedron(polyhedron*,camera,screen *);
+
+point2d project_point(point3d,camera,screen *);
+
 
 
 #endif	/* _3D_POINT */

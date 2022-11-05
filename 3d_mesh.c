@@ -43,3 +43,16 @@ point2d project_point(point3d _point3d, camera camera,screen *screen){
 
     return point_screen_space;
 }
+
+void draw_polyhedron(polyhedron *polyhedron_,camera camera,screen * screen){
+    uint32_t white = pixel_color(0xFF,0xFF,0xFF, &screen);
+
+    for (int i = 0; i < polyhedron_->nb_edge; i++)
+    {
+        edge edge = polyhedron_->edges[i];
+        point2d point1 = project_point(*(edge.point1),camera,screen);
+        point2d point2 = project_point(*(edge.point2),camera,screen);
+        draw_line(point1,point2,white,screen);
+    }
+    
+}
