@@ -58,29 +58,44 @@ void print_cube(camera camera,screen * screen){
 int main(int argc, char *argv[]) {
     /* 7 command-line parsing */
 
+    if (argc==1){
+        perror("Please provide a 3d mesh");
+        exit(EXIT_FAILURE);
+    }
+
+    FILE *fp;
+    fp = fopen(argv[1], "r"); // read mode
+
+    if (fp == NULL)
+    {
+        perror("Error while opening the file.\n");
+        exit(EXIT_FAILURE);
+    }
+
     screen screen;
 
     get_screen(&screen);
 
-	// camera camera = {
-    //     {1.2,1.1,1.3},
-    //     {1,0,0},
-    //     {0,1,0},
-    //     {0,0,1},
-    //     8,
-    //     4
-    // };
+	camera camera = {
+        {-3.2,1.1,1.3},
+        {1,0,0},
+        {0,1,0},
+        {0,0,1},
+        8,
+        4
+    };
 
-    camera camera = parse_camera();
+    //camera camera = parse_camera();
 
     //print_cube(camera,&screen);
 
-    polyhedron my_polygon = parse_polygon();
+    polyhedron my_polygon = parse_polygon(fp);
 
     draw_polyhedron(&my_polygon,camera,&screen);
 
     free_polyhedron(&my_polygon);
 
+    fclose(fp);
 
     close_screen(&screen);
 
