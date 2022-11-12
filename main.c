@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <termios.h>
 
 #include "iz-graphics.h"
 #include "line.h"
@@ -72,12 +73,24 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    struct termios attr;
+    
+    tcgetattr(0, &attr);
+    attr.c_lflag &= ~ICANON;
+    attr.c_lflag &= ~ECHO;
+    cc_t backup_VMIN = attr.c_cc[VMIN];
+    cc_t backup_VTIME = attr.c_cc[VTIME];
+    attr.c_cc[VMIN] = 1;
+    attr.c_cc[VTIME] = 0;
+    tcsetattr(0, TCSANOW, &attr);
+
+
     screen screen;
 
     get_screen(&screen);
 
 	camera camera = {
-        {-3.2,1.1,1.3},
+        {-5,0,0},
         {1,0,0},
         {0,1,0},
         {0,0,1},
@@ -91,7 +104,37 @@ int main(int argc, char *argv[]) {
 
     polyhedron my_polygon = parse_polygon(fp);
 
-    draw_polyhedron(&my_polygon,camera,&screen);
+    int input_char;
+
+    while (1)
+    {
+        input_char = getchar();
+        switch (input_char)
+        {
+        case 'z':
+            camera.position.y +=1;
+            break;
+        case 's':
+            camera.position.y -=1;
+            break;
+        case 'q':
+            camera.position.z +=1;
+            break;
+        case 'd':
+            camera.position.z -=1;
+            break;        
+        default:
+            break;
+        }
+
+        draw_polyhedron(&my_polygon,camera,&screen);
+    }
+
+    attr.c_lflag &= ICANON;
+    attr.c_lflag &= ECHO;
+    attr.c_cc[VMIN] = backup_VMIN;
+    attr.c_cc[VTIME] = backup_VTIME;
+    tcsetattr(0, TCSANOW, &attr);
 
     free_polyhedron(&my_polygon);
 

@@ -12,14 +12,14 @@ This web page introduces the basic of perspective projection in computer graphic
 ## how to run
 
 - compile with `make main`
-- run `./3d_wireframe.out`
+- run `./3d_wireframe.out my_polygon_file.pff`
 
-Compiling requires superuser privileges, as the executable produced needs to be in the video group to be able 
+❗ Compiling requires superuser privileges, as the executable produced needs to be in the video group to be able 
 to write in the framebuffer.
 
-Be aware. The graphics are handled directly at the linux kernel level, i.e. deeper than your windows manager level.
-I'm not sure, how all of this works, but my code will produce nothing if you have a graphics manager, like X or wayland
-running.
+Be aware. The graphics are handled directly at the linux kernel level, i.e. deeper than your window manager level.
+I'm not sure how all of this works, but my code will produce nothing if you have a graphics manager,like X or wayland or any
+window manager running.
 
 What I do :
 

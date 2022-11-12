@@ -26,7 +26,7 @@ polyhedron parse_polygon(FILE *polygon_file){
 
         if (index1>=polygon.nb_node || index2>=polygon.nb_node ||
             index1<0 || index2<0){
-            printf("invalid polygon file");
+            printf("invalid polygon file %d %d\n",index1,index2);
             exit(0);
         }
         polygon.edges[i].point1 = &(polygon.nodes[index1]);
