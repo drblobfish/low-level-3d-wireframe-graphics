@@ -11,12 +11,25 @@ typedef struct point3d
     float z;
 } point3d;
 
-typedef struct camera
+typedef struct euler_angle
 {
-    point3d position;
+    float alpha;
+    float beta;
+    float gamma;
+} euler_angle;
+
+
+typedef struct orientation
+{
     point3d normal;
     point3d vertical;
     point3d horizontal;
+} orientation;
+
+typedef struct camera
+{
+    point3d position;
+    euler_angle euler_angle;
     float fov_x;
     float fov_y;
 }camera;

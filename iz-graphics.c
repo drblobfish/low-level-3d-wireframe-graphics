@@ -80,6 +80,17 @@ void draw_line(point2d pt1, point2d pt2,uint32_t color,screen *screen){
     }
 }
 
+void clear(screen *screen){
+    point2d point;
+    for (point.x = 0;point.x<screen->vinfo.xres;point.x++){
+        for (point.y= 0; point.y < screen->vinfo.yres; point.y++)
+        {
+            put_pixel(point,0,screen);
+        }
+        
+    }
+}
+
 uint32_t pixel_color(uint8_t r, uint8_t g, uint8_t b, screen *screen)
 {
 	return (r<<(screen->vinfo.red.offset)) | (g<<(screen->vinfo.green.offset)) | (b<<(screen->vinfo.blue.offset));

@@ -91,14 +91,12 @@ int main(int argc, char *argv[]) {
 
 	camera camera = {
         {-5,0,0},
-        {1,0,0},
-        {0,1,0},
-        {0,0,1},
+        
+        {0,0,0},
+
         8,
         4
     };
-
-    //camera camera = parse_camera();
 
     //print_cube(camera,&screen);
 
@@ -122,10 +120,36 @@ int main(int argc, char *argv[]) {
             break;
         case 'd':
             camera.position.z -=1;
-            break;        
+            break;
+        case 'a':
+            camera.position.x +=1;
+            break;
+        case 'e':
+            camera.position.x -=1;
+            break;
+        case 'j':
+            camera.euler_angle.alpha -=0.1;
+            break;     
+        case 'l':
+            camera.euler_angle.alpha +=0.1;
+            break;
+        case 'i':
+            camera.euler_angle.beta +=0.1;
+            break;
+        case 'k':
+            camera.euler_angle.beta -=0.1;
+            break;
+        case 'u':
+            camera.euler_angle.gamma +=0.1;
+            break;
+        case 'o':
+            camera.euler_angle.gamma -=0.1;
+            break;
         default:
             break;
         }
+
+        clear(&screen);
 
         draw_polyhedron(&my_polygon,camera,&screen);
     }

@@ -35,18 +35,3 @@ polyhedron parse_polygon(FILE *polygon_file){
 
     return polygon;  
 }
-
-camera parse_camera(){
-    camera camera;
-    scanf("%f %f %f\n",&(camera.position.x),&(camera.position.y),&(camera.position.z));
-
-    scanf("%f %f %f\n",&(camera.normal.x),&(camera.normal.y),&(camera.normal.z));
-    scanf("%f %f %f\n",&(camera.vertical.x),&(camera.vertical.y),&(camera.vertical.z));
-    scanf("%f %f %f\n",&(camera.horizontal.x),&(camera.horizontal.y),&(camera.horizontal.z));
-
-    scanf("%f\n",&camera.fov_x);
-    scanf("%f\n",&camera.fov_y);
-
-    return camera;
-
-}

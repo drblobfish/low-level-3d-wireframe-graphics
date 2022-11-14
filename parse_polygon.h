@@ -7,7 +7,6 @@
 
 polyhedron parse_polygon(FILE *);
 
-camera parse_camera();
 
 
 #endif	/* _PARSE_POLYGON */
