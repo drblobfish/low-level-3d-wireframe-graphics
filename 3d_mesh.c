@@ -6,6 +6,7 @@
 
 point3d add_point3d(point3d point1, point3d point2)
 {
+    // vector addition
     point1.x += point2.x;
     point1.y += point2.y;
     point1.z += point2.z;
@@ -15,6 +16,7 @@ point3d add_point3d(point3d point1, point3d point2)
 
 point3d sub_point3d(point3d point1, point3d point2)
 {
+    // substract vector point 2 to point 1
     point1.x -= point2.x;
     point1.y -= point2.y;
     point1.z -= point2.z;
@@ -22,10 +24,123 @@ point3d sub_point3d(point3d point1, point3d point2)
     return point1;
 }
 
+orientation mult_orient(orientation or1,orientation rot){
+    // matrix multiplication rot*or1
+    orientation or_res;
+    or_res.normal.x = or1.normal.x * rot.normal.x + or1.normal.y * rot.vertical.x + or1.normal.z * rot.horizontal.x;
+    or_res.normal.y = or1.normal.x * rot.normal.y + or1.normal.y * rot.vertical.y + or1.normal.z * rot.horizontal.y;
+    or_res.normal.z = or1.normal.x * rot.normal.z + or1.normal.y * rot.vertical.z + or1.normal.z * rot.horizontal.z;
+
+    or_res.vertical.x = or1.vertical.x * rot.normal.x + or1.vertical.y * rot.vertical.x + or1.vertical.z * rot.horizontal.x;
+    or_res.vertical.y = or1.vertical.x * rot.normal.y + or1.vertical.y * rot.vertical.y + or1.vertical.z * rot.horizontal.y;
+    or_res.vertical.z = or1.vertical.x * rot.normal.z + or1.vertical.y * rot.vertical.z + or1.vertical.z * rot.horizontal.z;
+
+    or_res.horizontal.x = or1.horizontal.x * rot.normal.x + or1.horizontal.y * rot.vertical.x + or1.horizontal.z * rot.horizontal.x;
+    or_res.horizontal.y = or1.horizontal.x * rot.normal.y + or1.horizontal.y * rot.vertical.y + or1.horizontal.z * rot.horizontal.y;
+    or_res.horizontal.z = or1.horizontal.x * rot.normal.z + or1.horizontal.y * rot.vertical.z + or1.horizontal.z * rot.horizontal.z;
+
+    return or_res;
+}
+
 static inline float dot_product(point3d point1, point3d point2)
 {
+    // dot product
     return point1.x * point2.x + point1.y * point2.y + point1.z * point2.z;
 }
+
+// base_rotation generate_base_roation(float step){
+//     base_rotation base_rotation;
+
+//     euler_angle euler = {step,0,0};
+
+//     base_rotation.alpha_forw = euler_to_orientation(euler);
+//     euler.alpha = -step;
+//     base_rotation.alpha_backw = euler_to_orientation(euler);
+
+//     euler.alpha = 0;
+//     euler.beta = step;
+//     base_rotation.beta_forw = euler_to_orientation(euler);
+//     euler.beta = -step;
+//     base_rotation.beta_backw = euler_to_orientation(euler);
+
+//     euler.beta = 0;
+//     euler.gamma = step;
+//     base_rotation.gamma_forw = euler_to_orientation(euler);
+//     euler.gamma = -step;
+//     base_rotation.gamma_backw = euler_to_orientation(euler);
+
+//     return base_rotation;
+// }
+
+base_rotation generate_base_roation(float step){
+    float sin = sinf(step);
+    float cos = cosf(step);
+
+    base_rotation base_rotation;
+
+    base_rotation.alpha_forw.normal.x = cos;
+    base_rotation.alpha_forw.normal.y = sin;
+    base_rotation.alpha_forw.normal.z = 0;
+    base_rotation.alpha_forw.vertical.x = -sin;
+    base_rotation.alpha_forw.vertical.y = cos;
+    base_rotation.alpha_forw.vertical.z = 0;
+    base_rotation.alpha_forw.horizontal.x = 0;
+    base_rotation.alpha_forw.horizontal.y = 0;
+    base_rotation.alpha_forw.horizontal.z = 1;
+
+    base_rotation.alpha_backw.normal.x = cos;
+    base_rotation.alpha_backw.normal.y = -sin;
+    base_rotation.alpha_backw.normal.z = 0;
+    base_rotation.alpha_backw.vertical.x = sin;
+    base_rotation.alpha_backw.vertical.y = cos;
+    base_rotation.alpha_backw.vertical.z = 0;
+    base_rotation.alpha_backw.horizontal.x = 0;
+    base_rotation.alpha_backw.horizontal.y = 0;
+    base_rotation.alpha_backw.horizontal.z = 1;
+
+    base_rotation.beta_forw.normal.x = 1;
+    base_rotation.beta_forw.normal.y = 0;
+    base_rotation.beta_forw.normal.z = 0;
+    base_rotation.beta_forw.vertical.x = 0;
+    base_rotation.beta_forw.vertical.y = cos;
+    base_rotation.beta_forw.vertical.z = sin;
+    base_rotation.beta_forw.horizontal.x = 0;
+    base_rotation.beta_forw.horizontal.y = -sin;
+    base_rotation.beta_forw.horizontal.z = cos;
+
+    base_rotation.beta_backw.normal.x = 1;
+    base_rotation.beta_backw.normal.y = 0;
+    base_rotation.beta_backw.normal.z = 0;
+    base_rotation.beta_backw.vertical.x = 0;
+    base_rotation.beta_backw.vertical.y = cos;
+    base_rotation.beta_backw.vertical.z = -sin;
+    base_rotation.beta_backw.horizontal.x = 0;
+    base_rotation.beta_backw.horizontal.y = sin;
+    base_rotation.beta_backw.horizontal.z = cos;
+
+    base_rotation.gamma_forw.normal.x = cos;
+    base_rotation.gamma_forw.normal.y = 0;
+    base_rotation.gamma_forw.normal.z = sin;
+    base_rotation.gamma_forw.vertical.x = 0;
+    base_rotation.gamma_forw.vertical.y = 1;
+    base_rotation.gamma_forw.vertical.z = 0;
+    base_rotation.gamma_forw.horizontal.x = -sin;
+    base_rotation.gamma_forw.horizontal.y = 0;
+    base_rotation.gamma_forw.horizontal.z = cos;
+
+    base_rotation.gamma_backw.normal.x = cos;
+    base_rotation.gamma_backw.normal.y = 0;
+    base_rotation.gamma_backw.normal.z = -sin;
+    base_rotation.gamma_backw.vertical.x = 0;
+    base_rotation.gamma_backw.vertical.y = 1;
+    base_rotation.gamma_backw.vertical.z = 0;
+    base_rotation.gamma_backw.horizontal.x = sin;
+    base_rotation.gamma_backw.horizontal.y = 0;
+    base_rotation.gamma_backw.horizontal.z = cos;
+
+    return base_rotation;
+}
+
 
 orientation euler_to_orientation(euler_angle euler_angle){
     orientation orientation;
@@ -53,13 +168,11 @@ point2d project_point(point3d _point3d, camera camera, screen *screen)
 
     _point3d = sub_point3d(_point3d, camera.position);
 
-    orientation orientation = euler_to_orientation(camera.euler_angle);
-
     point3d point_camera_space;
 
-    point_camera_space.x = dot_product(_point3d, orientation.horizontal);
-    point_camera_space.y = dot_product(_point3d, orientation.vertical);
-    point_camera_space.z = dot_product(_point3d, orientation.normal);
+    point_camera_space.x = dot_product(_point3d, camera.orientation.horizontal);
+    point_camera_space.y = dot_product(_point3d, camera.orientation.vertical);
+    point_camera_space.z = dot_product(_point3d, camera.orientation.normal);
 
     point2d point_screen_space;
 

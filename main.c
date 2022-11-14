@@ -89,14 +89,19 @@ int main(int argc, char *argv[]) {
 
     get_screen(&screen);
 
-	camera camera = {
-        {-5,0,0},
-        
-        {0,0,0},
+	camera camera;
 
-        8,
-        4
-    };
+    camera.position.x = -5;
+    camera.position.y = 0;
+    camera.position.z = 0;
+
+    euler_angle base_orientation = {0,0,0};
+
+    camera.orientation = euler_to_orientation(base_orientation);
+
+    camera.fov_x = 8;
+    camera.fov_y = 4;
+
 
     //print_cube(camera,&screen);
 
@@ -104,52 +109,56 @@ int main(int argc, char *argv[]) {
 
     int input_char;
 
+    base_rotation base_rotation = generate_base_roation(0.1);
+
     while (1)
     {
         input_char = getchar();
         switch (input_char)
         {
         case 'z':
-            camera.position.y +=1;
+            camera.position = add_point3d(camera.position,camera.orientation.normal);
             break;
         case 's':
-            camera.position.y -=1;
-            break;
-        case 'q':
-            camera.position.z +=1;
+            camera.position = sub_point3d(camera.position,camera.orientation.normal);
             break;
         case 'd':
-            camera.position.z -=1;
+            camera.position = add_point3d(camera.position,camera.orientation.horizontal);
+            break;
+        case 'q':
+            camera.position = sub_point3d(camera.position,camera.orientation.horizontal);
             break;
         case 'a':
-            camera.position.x +=1;
+            camera.position = add_point3d(camera.position,camera.orientation.vertical);
             break;
         case 'e':
-            camera.position.x -=1;
+            camera.position = sub_point3d(camera.position,camera.orientation.vertical);
             break;
         case 'j':
-            camera.euler_angle.alpha -=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.gamma_forw);
             break;     
         case 'l':
-            camera.euler_angle.alpha +=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.gamma_backw);
             break;
         case 'i':
-            camera.euler_angle.beta +=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.alpha_forw);
             break;
         case 'k':
-            camera.euler_angle.beta -=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.alpha_backw);
             break;
         case 'u':
-            camera.euler_angle.gamma +=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.beta_forw);
             break;
         case 'o':
-            camera.euler_angle.gamma -=0.1;
+            camera.orientation = mult_orient(camera.orientation,base_rotation.beta_backw);
             break;
         default:
             break;
         }
 
         clear(&screen);
+
+        printf("\033[%d;%dH%f %f %f\n", 4, 4,camera.position.x,camera.position.y,camera.position.z);
 
         draw_polyhedron(&my_polygon,camera,&screen);
     }

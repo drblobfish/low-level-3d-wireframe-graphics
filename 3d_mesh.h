@@ -29,7 +29,7 @@ typedef struct orientation
 typedef struct camera
 {
     point3d position;
-    euler_angle euler_angle;
+    orientation orientation;
     float fov_x;
     float fov_y;
 }camera;
@@ -48,6 +48,28 @@ typedef struct polyhedron
     edge *edges;
     
 }polyhedron;
+
+typedef struct base_rotation
+{
+    orientation alpha_forw;
+    orientation alpha_backw;
+
+    orientation beta_forw;
+    orientation beta_backw;
+
+    orientation gamma_forw;
+    orientation gamma_backw;
+}base_rotation;
+
+point3d add_point3d(point3d, point3d);
+
+point3d sub_point3d(point3d, point3d);
+
+base_rotation generate_base_roation(float);
+
+orientation mult_orient(orientation,orientation);
+
+orientation euler_to_orientation(euler_angle);
 
 void free_polyhedron(polyhedron*);
 
