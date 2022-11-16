@@ -3,7 +3,7 @@ main :
 	sudo chgrp video ./3d_wireframe.out
 	sudo chmod g+s ./3d_wireframe.out
 
-line :
+line : # not working anymore
 	gcc -g line.c -o line.out
 	sudo chgrp video ./line.out
 	sudo chmod g+s ./line.out

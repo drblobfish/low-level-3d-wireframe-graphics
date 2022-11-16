@@ -13,11 +13,11 @@ typedef struct point2d
 
 typedef struct screen
 {
-    struct fb_fix_screeninfo finfo;
-	struct fb_var_screeninfo vinfo;
-    uint8_t *frame_buffer;
+    struct fb_fix_screeninfo finfo; // fixed framebuffer info
+	struct fb_var_screeninfo vinfo; // varying framebuffer info
+    uint8_t *frame_buffer; // pointer to the framebuffer memory
     long screensize;
-    int frame_buffer_file;
+    int frame_buffer_file; // file descriptor of frame buffer
 }screen;
 
 

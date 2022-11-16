@@ -3,6 +3,7 @@
 #include "3d_mesh.h"
 
 polyhedron parse_polygon(FILE *polygon_file){
+    /* parse a .pff file */
     polyhedron polygon;
     fscanf(polygon_file,"%d\n",&polygon.nb_node);
     fscanf(polygon_file,"%d\n",&polygon.nb_edge);
