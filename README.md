@@ -86,3 +86,7 @@ Once the program is running, you can move the camera using the following keys :
 - `i` `k` rotate up and down
 - `j` `l` rotate right and left
 - `u` `o` rotate
+
+## TODO
+
+- double buffering (currently working on this on branch `double-buffering`)
